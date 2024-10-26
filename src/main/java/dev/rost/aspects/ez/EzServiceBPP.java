@@ -25,7 +25,8 @@ class EzServiceBPP implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(@NonNull Object bean, String beanName) throws BeansException {
         if (beanName.equals("ezServiceImpl"))
-            return Enhancer.create(ezInfo.clazz, ezInfo.interfaces, (MethodInterceptor) (obj, method, args, proxy) -> {
+//            return Enhancer.create(ezInfo.clazz, ezInfo.interfaces, (MethodInterceptor) (obj, method, args, proxy) -> {
+            return Enhancer.create(bean.getClass(), bean.getClass().getInterfaces(), (MethodInterceptor) (obj, method, args, proxy) -> {
                 System.out.println("EzService#proxyMethodInvocation");
                 return proxy.invoke(bean, args);
             });
